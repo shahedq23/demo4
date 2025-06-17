@@ -1,0 +1,66 @@
+import speech_recognition as sr
+import pyttsx3
+import datetime
+
+# Initialize the recognizer and TTS engine
+listener = sr.Recognizer()
+engine = pyttsx3.init()
+
+def speak(text):
+    print("AI:", text)
+    engine.say(text)
+    engine.runAndWait()
+
+def listen():
+    try:
+        with sr.Microphone() as source:
+            print("🎤 Listening...")
+            audio = listener.listen(source, timeout=5)
+            command = listener.recognize_google(audio).lower()
+            print("You said:", command)
+            return command
+    except sr.UnknownValueError:
+        speak("Sorry, I didn't catch that.")
+    except sr.WaitTimeoutError:
+        speak("Listening timed out.")
+    return ""
+
+def recommend_channel():
+    hour = datetime.datetime.now().hour
+    if 6 <= hour < 9:
+        return "News Channel"
+    elif 9 <= hour < 17:
+        return "Educational Channel"
+    elif 17 <= hour < 21:
+        return "Entertainment Channel"
+    else:
+        return "Movie Channel"
+
+def handle_command(command):
+    if "turn on" in command:
+        speak("Turning on the TV.")
+    elif "turn off" in command:
+        speak("Shutting down the TV. Goodbye!")
+        return False
+    elif "change channel" in command or "recommend" in command:
+        channel = recommend_channel()
+        speak(f"I recommend: {channel}")
+    elif "volume up" in command:
+        speak("Increasing volume.")
+    elif "volume down" in command:
+        speak("Decreasing volume.")
+    else:
+        speak("I don't recognize that command.")
+    return True
+
+def main():
+    speak("Hello! I am your Smart TV Assistant.")
+    running = True
+    while running:
+        command = listen()
+        if command:
+            running = handle_command(command)
+
+if __name__ == "__main__":
+    main()
+

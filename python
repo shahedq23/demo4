@@ -1,0 +1,31 @@
+import datetime
+
+def recommend_channel(hour):
+    if 6 <= hour < 9:
+        return "📰 News Channel"
+    elif 9 <= hour < 17:
+        return "📚 Educational Channel"
+    elif 17 <= hour < 21:
+        return "🎭 Entertainment Channel"
+    else:
+        return "🎬 Movie Channel"
+
+def main():
+    now = datetime.datetime.now()
+    hour = now.hour
+
+    print("=== Smart TV AI ===")
+    print(f"Current time: {now.strftime('%H:%M')}")
+    
+    recommendation = recommend_channel(hour)
+    print(f"Recommended channel: {recommendation}")
+
+    choice = input("Would you like to switch to the recommended channel? (yes/no): ").strip().lower()
+    if choice == "yes":
+        print(f"Switching to: {recommendation}")
+    else:
+        print("Staying on the current channel.")
+
+if __name__ == "__main__":
+    main()
+
