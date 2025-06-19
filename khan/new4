@@ -1,0 +1,23 @@
+import pyautogui
+import time
+import matplotlib.pyplot as plt
+
+positions = []
+
+print("Tracking mouse for 10 seconds...")
+start_time = time.time()
+while time.time() - start_time < 10:
+    x, y = pyautogui.position()
+    positions.append((x, y))
+    time.sleep(0.05)
+
+# Plot heatmap of mouse movements
+x_vals, y_vals = zip(*positions)
+plt.figure(figsize=(10, 6))
+plt.hexbin(x_vals, y_vals, gridsize=60, cmap='inferno')
+plt.title('Mouse Movement Heatmap')
+plt.xlabel('X Position')
+plt.ylabel('Y Position')
+plt.colorbar()
+plt.show()
+

@@ -1,0 +1,32 @@
+import pygame
+import math
+pygame.init()
+
+# Setup
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+running = True
+
+# Car properties
+car_pos = [400, 300]
+car_angle = 0
+car_speed = 0
+
+def draw_car(x, y, angle):
+    car = pygame.Surface((50, 30), pygame.SRCALPHA)
+    pygame.draw.rect(car, (255, 0, 0), car.get_rect())
+    rotated_car = pygame.transform.rotate(car, -math.degrees(angle))
+    screen.blit(rotated_car, (x - rotated_car.get_width() // 2, y - rotated_car.get_height() // 2))
+
+while running:
+    screen.fill((30, 30, 30))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Basic AI movement logic
+    car_speed = 2
+    car_angle_
+

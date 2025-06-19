@@ -1,0 +1,16 @@
+import pygame
+import math
+
+pygame.init()
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+
+# Train state
+train_pos = [100, 300]
+train_angle = 0
+train_speed = 2
+
+# Track waypoints
+waypoints = [(100, 300), (300, 300), (]()
+

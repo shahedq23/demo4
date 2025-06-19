@@ -1,0 +1,117 @@
+import sqlite3
+
+# Connect to DB
+conn = sqlite3.connect('software_company.db')
+cursor = conn.cursor()
+
+# Table creation
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS employees (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    role TEXT,
+    email TEXT
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    client TEXT,
+    start_date TEXT,
+    end_date TEXT
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    status TEXT,
+    assigned_to INTEGER,
+    project_id INTEGER,
+    FOREIGN KEY (assigned_to) REFERENCES employees(id),
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+)
+''')
+
+conn.commit()
+
+# Functions
+def add_employee():
+    name = input("Employee Name: ")
+    role = input("Role (e.g., Developer, QA): ")
+    email = input("Email: ")
+    cursor.execute("INSERT INTO employees (name, role, email) VALUES (?, ?, ?)", (name, role, email))
+    conn.commit()
+    print("Employee added.")
+
+def add_project():
+    name = input("Project Name: ")
+    client = input("Client Name: ")
+    start = input("Start Date (YYYY-MM-DD): ")
+    end = input("End Date (YYYY-MM-DD): ")
+    cursor.execute("INSERT INTO projects (name, client, start_date, end_date) VALUES (?, ?, ?, ?)",
+                   (name, client, start, end))
+    conn.commit()
+    print("Project added.")
+
+def assign_task():
+    name = input("Task Name: ")
+    status = input("Status (e.g., To Do, In Progress, Done): ")
+    assigned_to = int(input("Assign to Employee ID: "))
+    project_id = int(input("Under Project ID: "))
+    cursor.execute("INSERT INTO tasks (name, status, assigned_to, project_id) VALUES (?, ?, ?, ?)",
+                   (name, status, assigned_to, project_id))
+    conn.commit()
+    print("Task assigned.")
+
+def view_projects():
+    for row in cursor.execute("SELECT * FROM projects"):
+        print(row)
+
+def view_employees():
+    for row in cursor.execute("SELECT * FROM employees"):
+        print(row)
+
+def view_tasks():
+    for row in cursor.execute("SELECT t.id, t.name, t.status, e.name, p.name FROM tasks t JOIN employees e ON t.assigned_to = e.id JOIN projects p ON t.project_id = p.id"):
+        print(f"Task ID: {row[0]}, Name: {row[1]}, Status: {row[2]}, Assigned to: {row[3]}, Project: {row[4]}")
+
+# Menu
+def menu():
+    while True:
+        print("\n--- Software Company Manager ---")
+        print("1. Add Employee")
+        print("2. Add Project")
+        print("3. Assign Task")
+        print("4. View Employees")
+        print("5. View Projects")
+        print("6. View Tasks")
+        print("7. Exit")
+
+        choice = input("Choose option: ")
+
+        if choice == '1':
+            add_employee()
+        elif choice == '2':
+            add_project()
+        elif choice == '3':
+            assign_task()
+        elif choice == '4':
+            view_employees()
+        elif choice == '5':
+            view_projects()
+        elif choice == '6':
+            view_tasks()
+        elif choice == '7':
+            break
+        else:
+            print("Invalid choice.")
+
+# Run program
+if __name__ == "__main__":
+    menu()
+    conn.close()
+

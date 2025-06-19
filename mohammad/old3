@@ -1,0 +1,60 @@
+// Motor pins
+const int IN1 = 8;
+const int IN2 = 9;
+const int IN3 = 10;
+const int IN4 = 11;
+
+// Bluetooth data
+char command;
+
+void setup() {
+  Serial.begin(9600); // For HC-05
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    command = Serial.read();
+    Serial.println(command);
+    moveCar(command);
+  }
+}
+
+void moveCar(char cmd) {
+  switch(cmd) {
+    case 'F': // Forward
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+      digitalWrite(IN3, HIGH);
+      digitalWrite(IN4, LOW);
+      break;
+    case 'B': // Backward
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, HIGH);
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, HIGH);
+      break;
+    case 'L': // Left
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, HIGH);
+      digitalWrite(IN3, HIGH);
+      digitalWrite(IN4, LOW);
+      break;
+    case 'R': // Right
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, HIGH);
+      break;
+    case 'S': // Stop
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, LOW);
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, LOW);
+      break;
+  }
+}
+

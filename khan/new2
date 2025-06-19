@@ -1,0 +1,19 @@
+import pygame
+import math
+
+pygame.init()
+
+# Screen
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+
+# Bike
+bike_pos = [100, 100]
+bike_angle = 0
+bike_speed = 2
+
+# Waypoints for AI to follow
+waypoints = [(100, 100), (700, 100), (700, 500), (100, 500)]
+waypoint_i_
+

@@ -1,0 +1,100 @@
+import sqlite3
+
+# Connect to database
+conn = sqlite3.connect('construction_company.db')
+cursor = conn.cursor()
+
+# Create tables
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    location TEXT,
+    start_date TEXT,
+    end_date TEXT
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS employees (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    role TEXT,
+    assigned_project INTEGER,
+    FOREIGN KEY (assigned_project) REFERENCES projects(id)
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS materials (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    quantity INTEGER,
+    project_id INTEGER,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+)
+''')
+
+conn.commit()
+
+# Functions
+def add_project():
+    name = input("Project Name: ")
+    location = input("Location: ")
+    start = input("Start Date (YYYY-MM-DD): ")
+    end = input("End Date (YYYY-MM-DD): ")
+    cursor.execute("INSERT INTO projects (name, location, start_date, end_date) VALUES (?, ?, ?, ?)",
+                   (name, location, start, end))
+    conn.commit()
+    print("Project added successfully!")
+
+def add_employee():
+    name = input("Employee Name: ")
+    role = input("Role: ")
+    project_id = input("Assigned Project ID: ")
+    cursor.execute("INSERT INTO employees (name, role, assigned_project) VALUES (?, ?, ?)",
+                   (name, role, project_id))
+    conn.commit()
+    print("Employee added successfully!")
+
+def add_material():
+    name = input("Material Name: ")
+    qty = int(input("Quantity: "))
+    project_id = input("Project ID: ")
+    cursor.execute("INSERT INTO materials (name, quantity, project_id) VALUES (?, ?, ?)",
+                   (name, qty, project_id))
+    conn.commit()
+    print("Material added successfully!")
+
+def view_projects():
+    for row in cursor.execute("SELECT * FROM projects"):
+        print(row)
+
+def main_menu():
+    while True:
+        print("\n--- Construction Company Manager ---")
+        print("1. Add Project")
+        print("2. Add Employee")
+        print("3. Add Material")
+        print("4. View Projects")
+        print("5. Exit")
+        choice = input("Select an option: ")
+
+        if choice == '1':
+            add_project()
+        elif choice == '2':
+            add_employee()
+        elif choice == '3':
+            add_material()
+        elif choice == '4':
+            view_projects()
+        elif choice == '5':
+            break
+        else:
+            print("Invalid option. Try again.")
+
+# Run the program
+if __name__ == "__main__":
+    main_menu()
+    conn.close()
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitPro Gym</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>FitPro Gym</h1>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#trainers">Trainers</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="home" class="hero">
+    <div class="container">
+      <h2>Train Hard. Stay Fit.</h2>
+      <p>Your fitness journey starts here.</p>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="container">
+      <h2>Our Services</h2>
+      <ul class="services">
+        <li>💪 Personal Training</li>
+        <li>🧘 Yoga Classes</li>
+        <li>🏋️ Weight Training</li>
+        <li>🚴 Cardio Sessions</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="trainers" class="section">
+    <div class="container">
+      <h2>Meet Our Trainers</h2>
+      <div class="trainer">
+        <img src="images/trainer.jpg" alt="Trainer" />
+        <p><strong>Alex Johnson</strong> - Certified Fitness Coach</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>Email: contact@fitprogym.com</p>
+      <p>Phone: +1-234-567-8901</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 FitPro Gym. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+
